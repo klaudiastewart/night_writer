@@ -1,25 +1,19 @@
-# require './message.txt'
+# require './lib/message'
 
 class NightWriter
+  attr_reader :file_name_text
 
-  def initialize(length = nil, file_name = nil)
-    @length = length
-    @file_name = file_name
+  def initialize(file_name_text)
+    @file_name_text = file_name_text
   end
 
   def start
-    puts "Welcome to night writer, how many words do you want to read?"
-    user_input = gets.chomp
-    new_file = File.open("braille.txt", "w+")
-    puts "Created #{new_file} containing #{user_input} characters"
+    user_input = gets.chomp #need to get this to read the length of message.txt
+    new_file = File.open("braille.txt", "w")
+    puts "Created '#{file_name_text}' containing #{user_input.length} characters"
   end
 end
 
-# user_input = gets.chomp
-# new_file = File.open(file_name, "w+")
-#{|f| f.write("yoooo") } #For f.write argument,
-# do I need to make a method to say whatever the size is, make a random word from that?
-# puts "Created #{file_name} containing characters"
 
-writer = NightWriter.new()
+writer = NightWriter.new("braille.txt")
 writer.start
