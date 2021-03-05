@@ -11,4 +11,7 @@ class NightWriterTest < Minitest::Test
     assert_instance_of NightWriter, @writer
   end
 
+  # def test_a_single_letter_can_convert
+  #   assert_equal "0.....", @writer.covert("a")
+  # end
 end

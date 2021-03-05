@@ -1,21 +1,31 @@
-# require './lib/message'
+require './lib/braille_dictionary'
 
 class NightWriter
   attr_reader :input_file,
-              :output_file
+              :output_file,
+              :input,
+              :input_2
 
   def initialize(input_file, output_file)
     @input_file = input_file
     @output_file = output_file
+    @input = ARGV[0]
+    @input_2 = ARGV[1]
+    require "pry"; binding.pry
   end
 
   def start
-    input = ARGV 
+    # input = ARGV[0]
+    # input_2 = ARGV[1]
     # require "pry"; binding.pry
     new_file = File.open("braille.txt", "w") do |fo|
-      fo.puts "#{input[1]}"
+      fo.puts "#{@input_2}"
     end
-    puts "Created '#{input_file}' containing #{input[1].length} characters"
+    puts "Created '#{output_file}' containing #{@input_2.length} characters"
+  end
+
+  def convert(letter)
+    # require "pry"; binding.pry
   end
 end
 
