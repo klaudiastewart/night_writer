@@ -1,19 +1,24 @@
 # require './lib/message'
 
 class NightWriter
-  attr_reader :file_name_text
+  attr_reader :input_file,
+              :output_file
 
-  def initialize(file_name_text)
-    @file_name_text = file_name_text
+  def initialize(input_file, output_file)
+    @input_file = input_file
+    @output_file = output_file
   end
 
   def start
-    user_input = gets.chomp #need to get this to read the length of message.txt
-    new_file = File.open("braille.txt", "w")
-    puts "Created '#{file_name_text}' containing #{user_input.length} characters"
+    input = ARGV 
+    # require "pry"; binding.pry
+    new_file = File.open("braille.txt", "w") do |fo|
+      fo.puts "#{input[1]}"
+    end
+    puts "Created '#{input_file}' containing #{input[1].length} characters"
   end
 end
 
 
-writer = NightWriter.new("braille.txt")
+writer = NightWriter.new("message.txt", "braille.txt")
 writer.start
