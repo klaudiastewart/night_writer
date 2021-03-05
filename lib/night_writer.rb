@@ -11,16 +11,17 @@ class NightWriter
     @output_file = output_file
     @input = ARGV[0]
     @input_2 = ARGV[1]
-    # require "pry"; binding.pry
   end
 
   def start
     File.open("message.txt", "r+") do |f|
       f.puts "#{@input_2}"
     end
-    File.open("braille.txt", "w") {|fo| fo.write("#{@input_2}") }
+    conversion
+    # File.open("braille.txt", "w") {|fo| fo.write("#{@input_2}") }
     puts "Created '#{output_file}' containing #{@input_2.length} characters"
-    convert
+    # conversion
+    show_change_in_output_file
   end
 
   def convert
@@ -52,13 +53,21 @@ class NightWriter
       "y" => "00.000",
       "z" => "0..000"
     }
-    # require "pry"; binding.pry
   end
 
   def conversion
-
+    read = File.read("message.txt").split[0] #split 0 removes the \n
+    letters_to_array = read.chars #splits each letter into elements of array
+    braille = letters_to_array.map do |let|
+      let = convert["p"] #hardcoded for now to see if it'll work
+      require "pry"; binding.pry
+    end
+    braille
   end
 
+  def show_change_in_output_file
+    File.open("braille.txt", "w+") {|fo| fo.write("#{conversion}") }
+  end
 end
 
 
