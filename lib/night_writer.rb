@@ -51,26 +51,33 @@ class NightWriter
       "w" => [".0", "00", ".0"],
       "x" => ["00", "..", "00"],
       "y" => ["00", ".0", "00"],
-      "z" => ["0.", ".0", "00"]
+      "z" => ["0.", ".0", "00"],
+      " " => ["..", "..", ".."],
+      "." => ["..", "00", ".0"]
     }
   end
 
   def read_file
-    read = File.read("message.txt").split[0] #split 0 removes the \n
+    read = File.read("message.txt").chomp
     if read.length > 40
       array = read.chars.each_slice(40).map(&:join)
       x = array.map do |letter|
         letter.chars
       end
+      # x1 = x.map do |arr|
+      #   arr.map! do |let|
+      #     let.chomp
+      #   end
+      # end
+      # require "pry"; binding.pry
     else
       [read.chars]
+      # array_minus_line[0].pop
+      # array_minus_line
     end
   end
 
   def conversion
-      # read = File.read("message.txt").split[0] #split 0 removes the \n
-      # letters_to_array = read_file.chars #splits each letter into elements of array
-      # require "pry"; binding.pry
       braille = read_file.map do |sliced_array|
         sliced_array.map do |letter|
           convert[letter]
@@ -96,7 +103,6 @@ class NightWriter
       File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
     end
   end
-
 
   writer = NightWriter.new(@input, "braille.txt")
   writer.start
