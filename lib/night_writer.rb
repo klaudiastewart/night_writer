@@ -18,9 +18,7 @@ class NightWriter
       f.puts "#{@input_2}"
     end
     conversion
-    # File.open("braille.txt", "w") {|fo| fo.write("#{@input_2}") }
     puts "Created '#{output_file}' containing #{@input_2.length} characters"
-    # conversion
     show_change_in_output_file
   end
 
@@ -41,7 +39,7 @@ class NightWriter
       "m" => "00..0.",
       "n" => "00.00.",
       "o" => "0..00.",
-      "p" => "000.0..",
+      "p" => ["00", "0.", "0."],
       "q" => "00000.",
       "r" => "0.000.",
       "s" => ".00.0.",
@@ -58,15 +56,18 @@ class NightWriter
   def conversion
     read = File.read("message.txt").split[0] #split 0 removes the \n
     letters_to_array = read.chars #splits each letter into elements of array
-    braille = letters_to_array.map do |let|
+    braille = letters_to_array.flat_map do |let|
       let = convert["p"] #hardcoded for now to see if it'll work
-      require "pry"; binding.pry
     end
     braille
+    # require "pry"; binding.pry
   end
 
   def show_change_in_output_file
-    File.open("braille.txt", "w+") {|fo| fo.write("#{conversion}") }
+    out_file = File.new("braille.txt", "w")
+    out_file.puts("#{conversion}")
+    # File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
+    # require "pry"; binding.pry
   end
 end
 
