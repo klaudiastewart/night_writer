@@ -57,9 +57,9 @@ class NightWriter
 
   def read_file
     read = File.read("message.txt").split[0] #split 0 removes the \n
-    if read.length > 80
+    if read.length > 40
       array = read.chars.each_slice(40).map(&:join)
-      array.map do |letter|
+      x = array.map do |letter|
         letter.chars
       end
     else
@@ -68,31 +68,35 @@ class NightWriter
   end
 
   def conversion
+      # read = File.read("message.txt").split[0] #split 0 removes the \n
+      # letters_to_array = read_file.chars #splits each letter into elements of array
+      # require "pry"; binding.pry
+      braille = read_file.map do |sliced_array|
+        sliced_array.map do |letter|
+          convert[letter]
+        end
+      end
+      top = ""
+      middle = ""
+      bottom = ""
+      message = ""
 
-    # read = File.read("message.txt").split[0] #split 0 removes the \n
-    # letters_to_array = read_file.chars #splits each letter into elements of array
-    # require "pry"; binding.pry
-    braille = read_file[0].map do |let|
-       convert[let]
+      braille.each do |sliced_array|
+        sliced_array.each do |braille_array|
+          top << braille_array[0] if top.length < 80
+          middle << braille_array[1] if middle.length < 80
+          bottom << braille_array[2] if bottom.length < 80
+        end
+        message = "#{top}\n#{middle}\n#{bottom}"
+      end
+      message
     end
-    row1 = ""
-    row2 = ""
-    row3 = ""
 
-    braille.each do |array|
-      row1 << array[0]
-      row2 << array[1]
-      row3 << array[2]
+    def show_change_in_output_file
+      File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
     end
-    message = "#{row1}\n#{row2}\n#{row3}"
-    # require "pry"; binding.pry
   end
 
-  def show_change_in_output_file
-    File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
-  end
-end
 
-
-writer = NightWriter.new(@input, "braille.txt")
-writer.start
+  writer = NightWriter.new(@input, "braille.txt")
+  writer.start
