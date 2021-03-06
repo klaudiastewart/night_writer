@@ -60,14 +60,14 @@ class NightWriter
       let = convert["p"] #hardcoded for now to see if it'll work
     end
     braille
-    # require "pry"; binding.pry
+    top = braille[0]
+    middle = braille[1]
+    bottom = braille[2]
+    message = "#{top}\n#{middle}\n#{bottom}"
   end
 
   def show_change_in_output_file
-    out_file = File.new("braille.txt", "w")
-    out_file.puts("#{conversion}")
-    # File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
-    # require "pry"; binding.pry
+    File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
   end
 end
 
