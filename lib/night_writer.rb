@@ -63,7 +63,7 @@ class NightWriter
         letter.chars
       end
     else
-      read.chars
+      [read.chars]
     end
   end
 
@@ -76,18 +76,18 @@ class NightWriter
           convert[letter]
         end
       end
-      top = ""
-      middle = ""
-      bottom = ""
       message = ""
 
       braille.each do |sliced_array|
+        top = ""
+        middle = ""
+        bottom = ""
         sliced_array.each do |braille_array|
-          top << braille_array[0] if top.length < 80
-          middle << braille_array[1] if middle.length < 80
-          bottom << braille_array[2] if bottom.length < 80
+          top << braille_array[0]
+          middle << braille_array[1]
+          bottom << braille_array[2]
         end
-        message = "#{top}\n#{middle}\n#{bottom}"
+        message += "#{top}\n#{middle}\n#{bottom}\n\n"
       end
       message
     end
