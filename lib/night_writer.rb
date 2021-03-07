@@ -1,4 +1,4 @@
-require './lib/braille_dictionary'
+# require "./modules/braille_dictionaryable"
 
 class NightWriter
   attr_reader :input_file,
@@ -11,7 +11,7 @@ class NightWriter
 
   def start
     conversion
-    file_characters = File.read(@input_file).length
+    file_characters = File.read(@output_file).length
     puts "Created '#{@output_file}' containing #{file_characters} characters"
     read_file
     show_change_in_output_file
@@ -51,7 +51,8 @@ class NightWriter
   end
 
   def read_file
-    read = File.read("message.txt").chomp
+    read = File.read("#{@input_file}").downcase.chomp
+    # require "pry"; binding.pry
     if read.length > 40
       array = read.chars.each_slice(40).map(&:join)
       x = array.map do |letter|
