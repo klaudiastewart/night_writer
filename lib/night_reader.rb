@@ -24,7 +24,7 @@ class NightReader
       ["0.", ".0", ".."]=>"e",
       ["00", "0.", ".."]=>"f",
       ["00", "00", ".."]=>"g",
-      "0.00.."          =>"h",
+      "0.00.."=>"h",
       [".0", "0.", ".."]=>"i",
       [".0", "00", ".."]=>"j",
       ["0.", "..", "0."]=>"k",
@@ -51,50 +51,34 @@ class NightReader
   def read_file
     read = File.read("#{@input_file}").chomp
     no_line = read.delete("\n")
+    # read == message on night_writer
+
     # if read.length > 80
     #   array = read.chars.each_slice(80).map(&:join)
     #   x = array.map do |letter|
     #     letter.chars
     #   end
-    # else
-    [no_line]
-      # [no_line.chars]
-    # end
-    # require "pry"; binding.pry
+    array = no_line.chars
+    count = array.count / 3
+    product = array.each_slice(count).to_a #makes an array of three arrays each representing top, middle, bottom
+
   end
 
   def conversion
-      letters = read_file.map do |braille|
-        convert[braille]
-      end
-      # braille = read_file.map do |sliced_array|
-      #   sliced_array.map do |letter|
-      #     convert[letter]
-      #   end
-      # end
-      message = ""
+      top = ""
+      middle = ""
+      bottom = ""
 
-      letters.each do |letter|
-        message += "#{letter}"
+      letters = read_file.each do |braille|
+        top << braille[0..1].join
+        middle << braille[2..3].join
+        bottom << braille[4..5].join
       end
-      #
-      # braille.each do |sliced_array|
-      #   top = ""
-      #   middle = ""
-      #   bottom = ""
-      #   sliced_array.each do |braille_array|
-      #     top << braille_array[0]
-      #     middle << braille_array[1]
-      #     bottom << braille_array[2]
-      #   end
-      #   message += "#{top}\n#{middle}\n#{bottom}\n\n"
-      # end
-      message
-      # require "pry"; binding.pry
+      letters = convert[top] + convert[middle] + convert[bottom]
+      letters
     end
 
     def show_change_in_output_file
       File.open("#{@output_file}", "w") {|fo| fo.write("#{conversion}") }
     end
-    require "pry"; binding.pry
   end
