@@ -2,24 +2,17 @@ require './lib/braille_dictionary'
 
 class NightWriter
   attr_reader :input_file,
-              :output_file,
-              :input,
-              :input_2
+              :output_file
 
   def initialize(input_file, output_file)
     @input_file = input_file
     @output_file = output_file
-    @input = ARGV[0]
-    @input_2 = ARGV[1]
   end
 
   def start
-    File.open(@input, "r+") do |f|
-      f.puts "#{@input_2}"
-    end
     conversion
-    file_characters = File.read(@input).length
-    puts "Created '#{output_file}' containing #{file_characters} characters"
+    file_characters = File.read(@input_file).length
+    puts "Created '#{@output_file}' containing #{file_characters} characters"
     read_file
     show_change_in_output_file
   end
@@ -64,16 +57,8 @@ class NightWriter
       x = array.map do |letter|
         letter.chars
       end
-      # x1 = x.map do |arr|
-      #   arr.map! do |let|
-      #     let.chomp
-      #   end
-      # end
-      # require "pry"; binding.pry
     else
       [read.chars]
-      # array_minus_line[0].pop
-      # array_minus_line
     end
   end
 
@@ -100,9 +85,6 @@ class NightWriter
     end
 
     def show_change_in_output_file
-      File.open("braille.txt", "w") {|fo| fo.write("#{conversion}") }
+      File.open("#{@output_file}", "w") {|fo| fo.write("#{conversion}") }
     end
   end
-
-  writer = NightWriter.new(@input, "braille.txt")
-  writer.start
