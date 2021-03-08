@@ -1,5 +1,3 @@
-# require "./modules/braille_dictionaryable"
-
 class NightWriter
   attr_reader :input_file,
               :output_file
@@ -11,7 +9,7 @@ class NightWriter
 
   def start
     conversion
-    file_characters = File.read(@output_file).length
+    file_characters = File.read(@input_file).length * 6
     puts "Created '#{@output_file}' containing #{file_characters} characters"
     read_file
     show_change_in_output_file
@@ -52,10 +50,9 @@ class NightWriter
 
   def read_file
     read = File.read("#{@input_file}").downcase.chomp
-    # require "pry"; binding.pry
     if read.length > 40
       array = read.chars.each_slice(40).map(&:join)
-      x = array.map do |letter|
+      array.map do |letter|
         letter.chars
       end
     else
@@ -64,28 +61,28 @@ class NightWriter
   end
 
   def conversion
-      braille = read_file.map do |sliced_array|
-        sliced_array.map do |letter|
-          convert[letter]
-        end
+    braille = read_file.map do |sliced_array|
+      sliced_array.map do |letter|
+        convert[letter]
       end
-      message = ""
+    end
+    message = ""
 
-      braille.each do |sliced_array|
-        top = ""
-        middle = ""
-        bottom = ""
-        sliced_array.each do |braille_array|
-          top << braille_array[0]
-          middle << braille_array[1]
-          bottom << braille_array[2]
-        end
-        message += "#{top}\n#{middle}\n#{bottom}\n\n"
+    braille.each do |sliced_array|
+      top = ""
+      middle = ""
+      bottom = ""
+      sliced_array.each do |braille_array|
+        top << braille_array[0]
+        middle << braille_array[1]
+        bottom << braille_array[2]
       end
-      message
+      message += "#{top}\n#{middle}\n#{bottom}\n"
     end
-
-    def show_change_in_output_file
-      File.open("#{@output_file}", "w") {|fo| fo.write("#{conversion}") }
-    end
+    message
   end
+
+  def show_change_in_output_file
+    File.open("#{@output_file}", "w") {|fo| fo.write("#{conversion}") }
+  end
+end
