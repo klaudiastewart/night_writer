@@ -50,21 +50,14 @@ class NightReader
 
   def read_file
     read = File.read("#{@input_file}").chomp
-    # no_line = read.delete("\n")
-    read.split
     read.split.map do |arr|
       arr.scan(/../)
     end
-    # read == message on night_writer
-
-    # if read.length > 80
-    #   array = read.chars.each_slice(80).map(&:join)
+    # if read.length > 240
+    #   array = read.chars.each_slice(240).map(&:join)
     #   x = array.map do |letter|
     #     letter.chars
     #   end
-    # array = no_line.chars
-    # count = array.count / 3
-    # product = array.each_slice(count).to_a #makes an array of three arrays each representing top, middle, bottom
     # require "pry"; binding.pry
   end
 
@@ -73,7 +66,7 @@ class NightReader
     count = 0
     until count == read_file[0].size do
       read_file.each do |braille|
-        stringed_message << braille[count]
+        stringed_message << braille[count] if braille[count] != nil
       end
       count += 1
     end
