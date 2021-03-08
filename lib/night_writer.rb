@@ -9,7 +9,7 @@ class NightWriter
 
   def start
     conversion
-    file_characters = File.read(@input_file).length
+    file_characters = File.read(@input_file).length * 6
     puts "Created '#{@output_file}' containing #{file_characters} characters"
     read_file
     show_change_in_output_file
