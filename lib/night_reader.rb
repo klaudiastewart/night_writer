@@ -62,25 +62,21 @@ class NightReader
     stringed_output = rows.map do |element|
       element.scan(/../)
     end
-    # require "pry"; binding.pry
     stringed_output
   end
 
   def conversion
     stringed_message = ""
-    count = 0
-    until count == read_file[0].size do
+    counter = 0
+    until counter == read_file[0].size do
       read_file.each do |braille|
-        stringed_message << braille[count] if braille[count] != nil
-        # require "pry"; binding.pry
+        stringed_message << braille[counter]
       end
-      count += 1
+      counter += 1
     end
-    # require "pry"; binding.pry
     output_message = stringed_message.scan(/....../).map do |string|
       convert[string]
     end.join
-    # require "pry"; binding.pry
     output_message
   end
 

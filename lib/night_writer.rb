@@ -8,10 +8,10 @@ class NightWriter
   end
 
   def start
-    conversion
+    read_file
     file_characters = File.read(@input_file).length * 6
     puts "Created '#{@output_file}' containing #{file_characters} characters"
-    read_file
+    conversion 
     show_change_in_output_file
   end
 
