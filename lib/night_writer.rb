@@ -61,25 +61,22 @@ class NightWriter
   end
 
   def conversion
-    braille = read_file.map do |sliced_array|
+    braille_character = read_file.map do |sliced_array|
       sliced_array.map do |letter|
         convert[letter]
       end
     end
-    message = ""
-
-    braille.each do |sliced_array|
-      top = ""
-      middle = ""
-      bottom = ""
+    output_message = ""
+    braille_character.each do |sliced_array|
+      rows = ["", "", ""]
       sliced_array.each do |braille_array|
-        top << braille_array[0]
-        middle << braille_array[1]
-        bottom << braille_array[2]
+        rows[0] << braille_array[0]
+        rows[1] << braille_array[1]
+        rows[2] << braille_array[2]
       end
-      message += "#{top}\n#{middle}\n#{bottom}\n"
+      output_message += "#{rows[0]}\n#{rows[1]}\n#{rows[2]}\n"
     end
-    message
+    output_message
   end
 
   def show_change_in_output_file
