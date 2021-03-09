@@ -54,6 +54,4 @@ class NightWriterTest < Minitest::Test
     writer = NightWriter.new("message_test_3.txt", "output_example.txt")
     assert writer.start
   end
-
-  #Add some tests where I know it would fail
 end
