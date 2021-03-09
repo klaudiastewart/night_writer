@@ -50,15 +50,20 @@ class NightReader
 
   def read_file
     read = File.read("#{@input_file}").chomp
-    read.split.map do |arr|
-      arr.scan(/../)
+    rows = ["", "", ""]
+    counter = 0
+    product = read.split
+    while counter < read.split.size do
+      rows[0] << product[counter]
+      rows[1] << product[counter + 1]
+      rows[2] << product[counter + 2]
+      counter += 3
     end
-    # if read.length > 240
-    #   array = read.chars.each_slice(240).map(&:join)
-    #   x = array.map do |letter|
-    #     letter.chars
-    #   end
+    stringed_output = rows.map do |element|
+      element.scan(/../)
+    end
     # require "pry"; binding.pry
+    stringed_output
   end
 
   def conversion
@@ -67,12 +72,15 @@ class NightReader
     until count == read_file[0].size do
       read_file.each do |braille|
         stringed_message << braille[count] if braille[count] != nil
+        # require "pry"; binding.pry
       end
       count += 1
     end
+    # require "pry"; binding.pry
     output_message = stringed_message.scan(/....../).map do |string|
       convert[string]
     end.join
+    # require "pry"; binding.pry
     output_message
   end
 
